@@ -1,0 +1,34 @@
+{
+    "name": "heimrichhannot/contao-navigation_plus",
+    "description":"Extend the default contao navigation with extended functionality.",
+    "keywords":["contao", "navigation"],
+    "type": "contao-module",
+    "homepage":"https://github.com/heimrichhannot/contao-navigation_plus",
+    "license":"LGPL-3.0+",
+    "authors":[
+        {
+            "name":"Heimrich & Hannot",
+            "email":"digitales@heimrich-hannot.de",
+            "homepage":"http://www.heimrich-hannot.de",
+            "role":"Developer"
+        }
+    ],
+    "support":{
+        "issues":"https://github.com/heimrichhannot/contao-navigation_plus/issues"
+    },
+    "require": {
+        "php": "~5.4 || ~7.0",
+        "contao/core-bundle": "^3.5.1 || ~4.1",
+        "contao-community-alliance/composer-plugin": "~2.4 || ~3.0"
+	},
+    "autoload": {
+        "classmap": [""]
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "": "system/modules/navigation_plus"
+            }
+        }
+    }
+}
