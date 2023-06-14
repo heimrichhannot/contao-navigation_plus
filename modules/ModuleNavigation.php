@@ -24,7 +24,7 @@ class ModuleNavigation extends \Contao\ModuleNavigation
 	 */
 	protected function renderNavigation($pid, $level=1, $host=null, $language=null)
 	{
-		$arrOrder = deserialize($this->orderPages, true);
+		$arrOrder = deserialize($this->pages, true);
 
 		// Get all active subpages
 		$objSubpages = PageModel::findPublishedSubpagesWithoutGuestsByPidWithOrder($pid, $this->showHidden, $this instanceof \ModuleSitemap, $arrOrder);
