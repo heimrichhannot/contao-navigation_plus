@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2023-11-20
+- Fixed: navigation not shown
+
 ## [1.0.1] - 2023-02-28
 - Changed: allow php 8
 

@@ -10,6 +10,8 @@
 
 namespace HeimrichHannot\NavigationPlus;
 
+use Contao\StringUtil;
+
 class ModuleNavigation extends \Contao\ModuleNavigation
 {
 	/**
@@ -24,7 +26,12 @@ class ModuleNavigation extends \Contao\ModuleNavigation
 	 */
 	protected function renderNavigation($pid, $level=1, $host=null, $language=null)
 	{
-		$arrOrder = deserialize($this->orderPages, true);
+        if (version_compare(VERSION, '4.10', '>=')) {
+            $arrOrder = StringUtil::deserialize($this->pages, true);
+        } else {
+            $arrOrder = deserialize($this->orderPages, true);
+        }
+
 
 		// Get all active subpages
 		$objSubpages = PageModel::findPublishedSubpagesWithoutGuestsByPidWithOrder($pid, $this->showHidden, $this instanceof \ModuleSitemap, $arrOrder);
