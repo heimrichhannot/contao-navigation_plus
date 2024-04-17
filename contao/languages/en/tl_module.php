@@ -13,4 +13,4 @@ $arrLang = &$GLOBALS['TL_LANG']['tl_module'];
 /**
  * Fields
  */
-$arrLang['definePages'] = array('Define pages', 'Limit pages based on site-structure.');
+$arrLang['definePages'] = ['Define pages', 'Limit pages based on site-structure.'];

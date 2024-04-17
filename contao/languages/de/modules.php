@@ -12,4 +12,4 @@
 /**
  * Front end modules
  */
-$GLOBALS['TL_LANG']['FMD']['navigation_plus'] = array('Navigation menu +', 'Generates a navigation menu from the site structure with extended functionality.');
+$GLOBALS['TL_LANG']['FMD']['navigation_plus'] = ['Navigationsmenü +', 'Erzeugt ein Navigationsmenü aus der Seitenstruktur mit erweiterten Funktionen.'];

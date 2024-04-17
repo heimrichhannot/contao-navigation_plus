@@ -8,8 +8,9 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
+$arrLang = &$GLOBALS['TL_LANG']['tl_module'];
 
 /**
- * Front end modules
+ * Fields
  */
-array_insert($GLOBALS['FE_MOD']['navigationMenu'], 2, array('navigation_plus' => 'HeimrichHannot\NavigationPlus\ModuleNavigation'));
+$arrLang['definePages'] = ['Seiten definieren', 'Auswahl der angezeigten Seiten auf Basis der Seitenstruktur eingrenzen.'];

@@ -8,8 +8,10 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-namespace HeimrichHannot\NavigationPlus;
+namespace HeimrichHannot\NavigationPlus\Model;
 
+use Contao\Database;
+use Contao\Date;
 
 class PageModel extends \Contao\PageModel
 {
@@ -21,13 +23,17 @@ class PageModel extends \Contao\PageModel
 	 * @param boolean $blnIsSitemap  If true, the sitemap settings apply
 	 * @param array   $arrPages      A list of page ids, that should be used to order subpages
 	 *
-	 * @return \Model\Collection|\PageModel[]|\PageModel|null A collection of models or null if there are no pages
+	 * @return \Contao\Model\Collection A collection of models or null if there are no pages
 	 */
-	public static function findPublishedSubpagesWithoutGuestsByPidWithOrder($intPid, $blnShowHidden = false, $blnIsSitemap = false, array $arrPages = array())
-	{
-		$time = \Date::floorToMinute();
+    public static function findPublishedSubpagesWithoutGuestsByPidWithOrder(
+        $intPid,
+        $blnShowHidden = false,
+        $blnIsSitemap = false,
+        array $arrPages = []
+    ) {
+        $time = Date::floorToMinute();
 
-		$objSubpages = \Database::getInstance()->prepare(
+		$objSubpages = Database::getInstance()->prepare(
 			"SELECT p1.*, (SELECT COUNT(*) FROM tl_page p2 WHERE 
 			p2.pid=p1.id AND p2.type!='root' AND p2.type!='error_403' AND 
 			p2.type!='error_404'" . ((!$blnShowHidden && empty($arrPages)) ? ($blnIsSitemap ? " AND (p2.hide='' OR sitemap='map_always')" : " AND p2.hide=''") : "") .

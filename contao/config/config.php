@@ -8,9 +8,14 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-$arrLang = &$GLOBALS['TL_LANG']['tl_module'];
+use Contao\ArrayUtil;
 
 /**
- * Fields
+ * Front end modules
  */
-$arrLang['definePages'] = array('Seiten definieren', 'Auswahl der angezeigten Seiten auf Basis der Seitenstruktur eingrenzen.');
+
+ArrayUtil::arrayInsert(
+    $GLOBALS['FE_MOD']['navigationMenu'],
+    2,
+    ['navigation_plus' => 'HeimrichHannot\NavigationPlus\ModuleNavigation']
+);
