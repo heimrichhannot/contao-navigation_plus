@@ -8,14 +8,7 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-use Contao\ArrayUtil;
-
 /**
  * Front end modules
  */
-
-ArrayUtil::arrayInsert(
-    $GLOBALS['FE_MOD']['navigationMenu'],
-    2,
-    ['navigation_plus' => 'HeimrichHannot\NavigationPlus\ModuleNavigation']
-);
+$GLOBALS['FE_MOD']['navigationMenu']['navigation_plus'] = 'HeimrichHannot\NavigationPlus\Module\ModuleNavigation';

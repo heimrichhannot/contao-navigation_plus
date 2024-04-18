@@ -14,6 +14,7 @@ use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\ModuleSitemap;
 use Contao\StringUtil;
+use Contao\System;
 use HeimrichHannot\NavigationPlus\Model\PageModel;
 
 class ModuleNavigation extends \Contao\ModuleNavigation
@@ -49,8 +50,12 @@ class ModuleNavigation extends \Contao\ModuleNavigation
         $items = [];
         $groups = [];
 
+        $tokenChecker = System::getContainer()->get('contao.security.token_checker');
+        $hasBackendUser = $tokenChecker->hasBackendUser();
+        $hasFrontendUser = $tokenChecker->hasFrontendUser();
+
         // Get all groups of the current front end user
-        if (FE_USER_LOGGED_IN)
+        if ($hasFrontendUser)
         {
             $this->import('FrontendUser', 'User');
             $groups = $this->User->groups;
@@ -113,7 +118,7 @@ class ModuleNavigation extends \Contao\ModuleNavigation
 
             // Do not show protected pages unless a back end or front end user is logged in
             if (!$objSubpage->protected
-                || BE_USER_LOGGED_IN
+                || $hasBackendUser
                 || (is_array($_groups) && count(array_intersect($_groups, $groups)))
                 || $this->showProtected
                 || ($this instanceof ModuleSitemap && $objSubpage->sitemap == 'map_always'))
@@ -160,7 +165,7 @@ class ModuleNavigation extends \Contao\ModuleNavigation
 
                         // Hide the link if the target page is invisible
                         if ($objNext === null
-                            || (!BE_USER_LOGGED_IN
+                            || (!$hasBackendUser
                                 && !$objNext->published
                                 || ($objNext->start != ''
                                     && $objNext->start > time())

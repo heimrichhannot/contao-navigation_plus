@@ -12,6 +12,7 @@ namespace HeimrichHannot\NavigationPlus\Model;
 
 use Contao\Database;
 use Contao\Date;
+use Contao\System;
 
 class PageModel extends \Contao\PageModel
 {
@@ -33,16 +34,20 @@ class PageModel extends \Contao\PageModel
     ) {
         $time = Date::floorToMinute();
 
+        $tokenChecker = System::getContainer()->get('contao.security.token_checker');
+        $hasBackendUser = $tokenChecker->hasBackendUser();
+        $hasFrontendUser = $tokenChecker->hasFrontendUser();
+
 		$objSubpages = Database::getInstance()->prepare(
 			"SELECT p1.*, (SELECT COUNT(*) FROM tl_page p2 WHERE 
 			p2.pid=p1.id AND p2.type!='root' AND p2.type!='error_403' AND 
 			p2.type!='error_404'" . ((!$blnShowHidden && empty($arrPages)) ? ($blnIsSitemap ? " AND (p2.hide='' OR sitemap='map_always')" : " AND p2.hide=''") : "") .
-			((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? " AND p2.guests=''" : "") .
-			(!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<='$time') AND (p2.stop='' OR p2.stop>'" . ($time + 60) . "') AND p2.published='1'" : "") . ") 
+			(($hasFrontendUser && !$hasBackendUser) ? " AND p2.guests=''" : "") .
+			(!$hasBackendUser ? " AND (p2.start='' OR p2.start<='$time') AND (p2.stop='' OR p2.stop>'" . ($time + 60) . "') AND p2.published='1'" : "") . ") 
 			AS subpages FROM tl_page p1 WHERE p1.pid=? AND p1.type!='root' AND p1.type!='error_403' AND p1.type!='error_404'" .
 			((!$blnShowHidden && empty($arrPages)) ? ($blnIsSitemap ? " AND (p1.hide='' OR sitemap='map_always')" : " AND p1.hide=''") : "") .
-			((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? " AND p1.guests=''" : "") .
-			(!BE_USER_LOGGED_IN ? " AND (p1.start='' OR p1.start<='$time') AND (p1.stop='' OR p1.stop>'" . ($time + 60) . "') AND p1.published='1'" : "") .
+			(($hasFrontendUser && !$hasBackendUser) ? " AND p1.guests=''" : "") .
+			(!$hasBackendUser ? " AND (p1.start='' OR p1.start<='$time') AND (p1.stop='' OR p1.stop>'" . ($time + 60) . "') AND p1.published='1'" : "") .
 			(empty($arrPages) ? " ORDER BY p1.sorting" : " ORDER BY FIELD(p1.id," . implode(',', array_map('intval', $arrPages)) . ")"))
 			->execute($intPid);
 
