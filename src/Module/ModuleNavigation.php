@@ -12,6 +12,7 @@ namespace HeimrichHannot\NavigationPlus\Module;
 
 use Contao\Environment;
 use Contao\FrontendTemplate;
+use Contao\FrontendUser;
 use Contao\ModuleSitemap;
 use Contao\StringUtil;
 use Contao\System;
@@ -57,7 +58,7 @@ class ModuleNavigation extends \Contao\ModuleNavigation
         // Get all groups of the current front end user
         if ($hasFrontendUser)
         {
-            $this->import('FrontendUser', 'User');
+            $this->import(FrontendUser::class, 'User');
             $groups = $this->User->groups;
         }
 
