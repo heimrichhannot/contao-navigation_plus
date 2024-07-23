@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2024-07-23
+- Fixed: Contao 4 class import
+
 ## [1.0.2] - 2023-11-20
 - Fixed: navigation not shown
 
